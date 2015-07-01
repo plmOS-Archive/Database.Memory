@@ -1,5 +1,5 @@
 ﻿/*  
-  plmOS Memory is a .NET library that implements an in memory plmOS Database.
+  plmOS Database Memory is a .NET library that implements an in memory plmOS Database.
 
   Copyright (C) 2015 Processwall Limited.
 
