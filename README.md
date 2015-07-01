@@ -1,15 +1,15 @@
-### plmOS Memory
+### plmOS Database Memory
 
-plmOS Memory is a .NET library that implements an in memory plmOS Database.
+plmOS Database Memory is a .NET library that implements an in memory plmOS Database.
 
 Copyright (C) 2015 [Processwall Limited](http://www.processwall.com).
 
-Processwall Limited provides plmOS Memory under a dual licence model designed to meet the development 
+Processwall Limited provides plmOS Database Memory under a dual licence model designed to meet the development 
 and distribution needs of both commercial and open source projects.
 
 #### Open Source Projects
 
-Open source projects can redistribute and/or modify plmOS Memory under the terms of the 
+Open source projects can redistribute and/or modify plmOS Database Memory under the terms of the 
 GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
