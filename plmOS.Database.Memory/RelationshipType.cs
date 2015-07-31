@@ -30,33 +30,24 @@ using System.Threading.Tasks;
 
 namespace plmOS.Database.Memory
 {
-    public class Transaction : ITransaction
+    public class RelationshipType : ItemType, IRelationshipType
     {
-        public Session Session { get; private set; }
+        public IItemType ParentType { get; private set; }
 
-        public void Supercede(Guid VersionID, Int64 Seperceded)
+        public IItemType ChildType { get; private set; }
+
+        internal RelationshipType(ItemType Base, String Name, IItemType ParentType, IItemType ChildType)
+            :base(Base, Name)
         {
-
+            this.ParentType = ParentType;
+            this.ChildType = ChildType;
         }
 
-        public void Commit()
+        internal RelationshipType(RelationshipType Base, String Name, IItemType ParentType, IItemType ChildType)
+            : base(Base, Name)
         {
-
-        }
-
-        public void Rollback()
-        {
-
-        }
-
-        public void Dispose()
-        {
-
-        }
-
-        internal Transaction(Session Session)
-        {
-            this.Session = Session;
+            this.ParentType = ParentType;
+            this.ChildType = ChildType;
         }
     }
 }

@@ -30,33 +30,18 @@ using System.Threading.Tasks;
 
 namespace plmOS.Database.Memory
 {
-    public class Transaction : ITransaction
+    public class Property : IProperty
     {
-        public Session Session { get; private set; }
+        public String Name { get; private set;  }
 
-        public void Supercede(Guid VersionID, Int64 Seperceded)
+        public IPropertyType Type { get; private set; }
+
+        public object Value { get; private set; }
+
+        internal Property(PropertyType Type, object Value)
         {
-
-        }
-
-        public void Commit()
-        {
-
-        }
-
-        public void Rollback()
-        {
-
-        }
-
-        public void Dispose()
-        {
-
-        }
-
-        internal Transaction(Session Session)
-        {
-            this.Session = Session;
+            this.Type = Type;
+            this.Value = Value;
         }
     }
 }

@@ -32,13 +32,64 @@ namespace plmOS.Database.Memory
 {
     public class Session : ISession
     {
+        private Dictionary<String, ItemType> ItemTypesCache;
+
+        public IItemType CreateItemType(String Name)
+        {
+            return this.CreateItemType(null, Name);
+        }
+
+        public IItemType CreateItemType(IItemType Base, String Name)
+        {
+            ItemType itemtype = new ItemType((ItemType)Base, Name);
+            this.ItemTypesCache[Name] = itemtype;
+            return itemtype;
+        }
+
+        public IRelationshipType CreateRelationshipType(IItemType Base, String Name, IItemType ParentType, IItemType ChildType)
+        {
+            RelationshipType reltype = new RelationshipType((ItemType)Base, Name, ParentType, ChildType);
+            this.ItemTypesCache[Name] = reltype;
+            return reltype;
+        }
+
+        public IRelationshipType CreateRelationshipType(IRelationshipType Base, String Name, IItemType ParentType, IItemType ChildType)
+        {
+            RelationshipType reltype = new RelationshipType((RelationshipType)Base, Name, ParentType, ChildType);
+            this.ItemTypesCache[Name] = reltype;
+            return reltype;
+        }
+
         public ITransaction BeginTransaction()
         {
             return new Transaction(this);
         }
 
+        Dictionary<Guid, Item> ItemCache;
+
+        public IItem Create(IItemType Type, Guid ItemID, Guid BranchID, Guid VersionID, Int64 Branched, Int64 Versioned, ITransaction Transaction)
+        {
+            Item item = new Item((ItemType)Type, ItemID, BranchID, VersionID, Branched, Versioned);
+            this.ItemCache[item.VersionID] = item;
+            return item;
+        }
+
+        public IRelationship Create(IRelationshipType Type, Guid ItemID, Guid BranchID, Guid VersionID, Int64 Branched, Int64 Versioned, IItem Parent, IItem Child, ITransaction Transaction)
+        {
+            Relationship rel = new Relationship((RelationshipType)Type, ItemID, BranchID, VersionID, Branched, Versioned, (Item)Parent, (Item)Child);
+            this.ItemCache[rel.VersionID] = rel;
+            return rel;
+        }
+
+        public void Supercede(Guid VersionID, Int64 Superceded, ITransaction Transaction)
+        {
+            this.ItemCache[VersionID].Superceded = Superceded;
+        }
+
         public Session()
         {
+            this.ItemTypesCache = new Dictionary<String, ItemType>();
+            this.ItemCache = new Dictionary<Guid, Item>();
         }
     }
 }
